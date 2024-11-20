@@ -13,8 +13,9 @@ const EmploiDetail = ({ emploi }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedEmploi, setEditedEmploi] = useState({ ...emploi });
   const [visibility, setIsVisible] = useState(emploi.visibility || false);
+  const [editedEmploi, setEditedEmploi] = useState({ ...emploi });
+ 
 
   useEffect(() => {
     setIsVisible(emploi.visibility);
@@ -55,7 +56,7 @@ const EmploiDetail = ({ emploi }) => {
     e.preventDefault();
     const updatedEmploi = { ...editedEmploi };
 
-    
+    console.log("Emploi to be saved:", updatedEmploi);
 
     const response = await fetch('/api/offreEmploi/' + emploi._id, {
       method: 'PATCH',
@@ -244,18 +245,23 @@ const EmploiDetail = ({ emploi }) => {
                       required
                     />
                   </div>
-                  <div className="inputs-groups">
-                    <label>Visible</label>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={visibility}
-                        value={editedEmploi.visibility}
-                        onChange={(e) => setIsVisible(e.target.checked)}
-                      />
-                      <span className="slider"></span>
-                    </label>
-                  </div>
+                    <div className="inputs-groups">
+                      <label>Visible</label>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={visibility}
+                          value={editedEmploi.visibility}
+                          onChange={(e) => {
+                            const isVisible = e.target.checked;
+                            setIsVisible(isVisible);
+                            setEditedEmploi((prev) => ({ ...prev, visibility: isVisible }));
+                          }}
+                        />
+                        <span className="slider"></span>
+                      </label>
+                    </div>
+
                   <button type="submit">Enregistrer les modifications</button>
                 </form>
               </div>
