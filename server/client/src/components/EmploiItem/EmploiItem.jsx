@@ -36,14 +36,19 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
   }, [dispatch, candidat]);
 
   const emploisList = emplois || [];
-  const filteredEmplois = emploisList.filter(emploi => {
+  const filteredEmplois = emploisList.filter((emploi) => {
+    const nomPoste = emploi.nom_poste || ""; // Assurez une valeur par défaut
+    const nomCandidat = emploi.nom_candidat || "";
+    const categorie = emploi.categorie || "";
+    const description = emploi.description || "";
+    const emplacement = emploi.emplacement || "";
     return (
       emploi.visibility === true &&
-      (emploi.nom_poste.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        emploi.nom_candidat.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        emploi.categorie.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (emploi.description && emploi.description.toLowerCase().includes(searchTerm.toLowerCase()))) &&
-      (location === "" || emploi.emplacement.toLowerCase().includes(location.toLowerCase()))
+      (nomPoste.toLowerCase().includes((searchTerm || "").toLowerCase()) ||
+        nomCandidat.toLowerCase().includes((searchTerm || "").toLowerCase()) ||
+        categorie.toLowerCase().includes((searchTerm || "").toLowerCase()) ||
+        description.toLowerCase().includes((searchTerm || "").toLowerCase())) &&
+      (location === "" || emplacement.toLowerCase().includes((location || "").toLowerCase()))
     );
   });
 
