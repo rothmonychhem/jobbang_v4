@@ -5,7 +5,7 @@ import { useEmploiContext } from "../../hooks/useEmploiContext";
 import { useCandidatContext } from "../../hooks/useCandidatContext";
 
 const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
-  const [showEmail, setShowEmail] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const [selectedEmploi, setSelectedEmploi] = useState(null); // Track selected emploi for details
   const { emplois, dispatch } = useEmploiContext();
   const { candidat } = useCandidatContext();
@@ -102,17 +102,17 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
                 <span className="label">Emplacement:</span> {emploi.emplacement}
               </span>
 
-              <button className="buttonP" onClick={() => setShowEmail((prev) => prev === emploi ? null : emploi)}>
+              <button className="buttonP" onClick={() => setShowMessage((prev) => prev === emploi ? null : emploi)}>
                 Postuler
               </button>
 
-              {showEmail === emploi && (
+              {showMessage === emploi && (
                 <div className="popup">
                   <div className="popup-content">
-                    <span className="close" onClick={() => setShowEmail(null)}>
+                    <span className="close" onClick={() => setShowMessage(null)}>
                       &times;
                     </span>
-                    <h4>Email: <a href={`mailto:${emploi.email_employeur}`}>{emploi.email_employeur}</a></h4>
+                    <h4>Merci d'avoir soumis votre candiature!</h4>
                   </div>
                 </div>
               )}
