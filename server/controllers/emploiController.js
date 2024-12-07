@@ -106,11 +106,43 @@ const modifierEmploi = async(req,res) =>{
 
 
 
+const postulerEmploi = async (req, res) => {
+    const { id } = req.params;
+
+    // Extract the current user's email from the request object
+    const { email_candidat } = req.candidat;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "Il n'y a pas cette offre" });
+    }
+
+    try {
+        // Add the user's email to the candidats list in the job offer
+        const offreEmploi = await OffreEmploi.findOneAndUpdate(
+            { _id: id },
+            { $addToSet: { candidats: email_candidat } }, // Prevent duplicate entries
+            { new: true } // Return the updated document
+        );
+
+        if (!offreEmploi) {
+            return res.status(404).json({ error: "Pas ce genre d'offre" });
+        }
+
+        res.status(200).json({ message: "Candidature enregistrée avec succès.", offreEmploi });
+    } catch (error) {
+        res.status(500).json({ error: "Une erreur est survenue.", details: error.message });
+    }
+};
+
+
+
+
+
 //git
 export { 
     creeOffre,
     avoirOffre, 
     avoirOffres ,
     supprimerEmploi,
-    modifierEmploi};
+    modifierEmploi, postulerEmploi};
 

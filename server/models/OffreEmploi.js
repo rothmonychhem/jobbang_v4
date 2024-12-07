@@ -47,6 +47,12 @@ const offreSchema = new Schema({
       visibility:{
         type: Boolean,
         require: true
+      },
+
+      candidats:{
+        type: [String],
+        require: true
+
       }
     }, { timestamps: true });
 
