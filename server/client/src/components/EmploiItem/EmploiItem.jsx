@@ -3,12 +3,14 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import "./EmploiItem.css";
 import { useEmploiContext } from "../../hooks/useEmploiContext";
 import { useCandidatContext } from "../../hooks/useCandidatContext";
+import { useEntrepriseContext } from "../../hooks/useEntrepriseContext";
 
 const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [selectedEmploi, setSelectedEmploi] = useState(null); // Track selected emploi for details
   const { emplois, dispatch } = useEmploiContext();
   const { candidat } = useCandidatContext();
+  const { entreprise } = useEntrepriseContext();//besoin pour update?
 
   useEffect(() => {
     const fetchEmploi = async () => {

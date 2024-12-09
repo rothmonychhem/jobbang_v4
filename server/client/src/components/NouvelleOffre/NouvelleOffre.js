@@ -19,7 +19,8 @@ const NouvelleOffre = () => {
   const [description, setDescription] = useState('');
   const [responsabilite, setResponsabilite] = useState('');
   const [exigence, setExigence] = useState('');
-  const [visibility] = useState(true); // visibility set to true by default
+  const [visibility] = useState(true);
+  const [candidats] = []; // visibility set to true by default
   
   const [error, setError] = useState(null);
 
@@ -41,7 +42,8 @@ const NouvelleOffre = () => {
       description: description,
       responsabilite: responsabilite,
       exigence: exigence,
-      visibility: visibility // auto true
+      visibility: visibility, // auto true
+      candidats: []
     };
 
     const response = await fetch('/api/offreEmploi/', {

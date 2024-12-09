@@ -25,6 +25,14 @@ export const EmploiContext = createContext()
                 emplois: state.emplois.map((emploi) =>
                     emploi._id === action.payload._id ? action.payload : emploi
                   )};
+
+        case 'POSTULER EMPLOIS':
+            return {
+                emplois: state.emplois.map((emploi) =>
+                    emploi._id === action.payload._id ? action.payload : emploi
+                  )};
+
+
                     
                    
         default :
