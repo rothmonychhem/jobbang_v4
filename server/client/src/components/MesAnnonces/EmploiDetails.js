@@ -74,6 +74,9 @@ const EmploiDetail = ({ emploi }) => {
     } else {
       setError('Échec de la mise à jour: ' + json.message);
     }
+
+
+    
   };
 
   return (
@@ -106,7 +109,7 @@ const EmploiDetail = ({ emploi }) => {
             <div className="popup email-popup">
               <div className="popup-content">
                 <span className="close" onClick={toggleEmail}>&times;</span>
-                <h4>Email: <a href={`mailto:${emploi.email_employeur}`}>{emploi.email_employeur}</a></h4>
+                <h4>Email: <a href={`mailto:${emploi.candidats}`}>{emploi.candidats}</a></h4>
               </div>
             </div>
           )}

@@ -37,6 +37,9 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
     }
   }, [dispatch, candidat]);
 
+
+  
+
   const emploisList = emplois || [];
   const filteredEmplois = emploisList.filter((emploi) => {
     const nomPoste = emploi.nom_poste || ""; // Assurez une valeur par défaut

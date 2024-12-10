@@ -109,7 +109,9 @@ const modifierEmploi = async(req,res) =>{
 const postulerEmploi = async (req, res) => {
     const { id } = req.params;
 
-    // Extract the current user's email from the request object
+    
+
+
     const { email_candidat } = req.candidat;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -120,7 +122,7 @@ const postulerEmploi = async (req, res) => {
         // Add the user's email to the candidats list in the job offer
         const offreEmploi = await OffreEmploi.findOneAndUpdate(
             { _id: id },
-            { $addToSet: { candidats: email_candidat } }, // Prevent duplicate entries
+            { $addToSet: { candidats: email_candidat } },
             { new: true } 
         );
 
