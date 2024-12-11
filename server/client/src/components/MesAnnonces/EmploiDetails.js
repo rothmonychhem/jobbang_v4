@@ -79,7 +79,7 @@ const EmploiDetail = ({ emploi }) => {
 
   return (
     <div className="emploi-detail-container">
-      <ul className="lmj-emploi-list tata">
+      <ul className="lmj-emploi-list">
         <div className={`emploi-container ${isEditing ? "editing" : ""}`}>
           <div className="image-containerB" onClick={toggleEdit}>
             <img src={edit} alt="edit" className="small-image" />

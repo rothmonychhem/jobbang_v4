@@ -107,12 +107,14 @@ const modifierEmploi = async(req,res) =>{
 
 
 const postulerEmploi = async (req, res) => {
+
+   
     const { id } = req.params;
+    const { email_candidat } = req.body;
 
-    
+  
 
-
-    const { email_candidat } = req.candidat;
+   
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: "Il n'y a pas cette offre" });

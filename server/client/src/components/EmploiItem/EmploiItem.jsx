@@ -49,9 +49,11 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs, emploi }) =
 
     const response = await fetch(`/api/offreEmploi/postuler/${emploi._id}`, {
       method: 'PATCH',
+      body: JSON.stringify(candidat),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${candidat.token}`
+        'Authorization': `Bearer ${candidat.token}`,
+        
       }
     });
 

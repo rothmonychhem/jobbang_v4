@@ -3,7 +3,7 @@
 
     return (
         <div>
-          <ul className="lmj-emploi-list auto">
+          <ul className="lmj-emploi-list">
         
                 <div className="emploi-container" >
                   <h2 className="jobTitle">{emploi.nom_poste}</h2>
