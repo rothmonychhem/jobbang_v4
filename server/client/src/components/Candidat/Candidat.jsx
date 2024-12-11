@@ -33,6 +33,7 @@ export const Candidat = ({ likedJobs, setLikedJobs }) => {
 
   return (
     <div className="candidat-container">
+      <p>rothmonm</p>
       <NavBarCand />
       <div className="candidat-titre">Recherchez un emploi</div>
       <br />
@@ -58,7 +59,7 @@ export const Candidat = ({ likedJobs, setLikedJobs }) => {
       </div>
 
       <div className="emploi-results">
-        {isSearched && <EmploiItem searchTerm={searchTerm} location={location} likedJobs={likedJobs} setLikedJobs={setLikedJobs} />}
+        {isSearched && <EmploiItem searchTerm={searchTerm} location={location} likedJobs={likedJobs} setLikedJobs={setLikedJobs}  />}
       </div>
     </div>
 

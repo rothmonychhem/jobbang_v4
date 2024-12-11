@@ -46,7 +46,7 @@ if(entreprise){
 return (
 
   <div>
-    <ul className="lmj-emploi-list">
+    <ul className="lmj-emploi-list titi">
     {emplois && emplois.map((emploi) =>(
     <EmploiDetails key ={emploi._id} emploi={emploi} />
     ))}

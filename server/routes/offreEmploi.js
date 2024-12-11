@@ -25,7 +25,7 @@ router.use(authMiddlewareEnt); // Appliquer authMiddlewareEnt uniquement aux rou
 router.post('/', creeOffre); // Les entreprises peuvent créer des offres
 router.delete('/:id', supprimerEmploi); // Les entreprises peuvent supprimer des offres
 router.patch('/:id', modifierEmploi); // Les entreprises peuvent modifier des offres
-router.patch('/:id', postulerEmploi); 
+router.patch('/postuler/:id', postulerEmploi); 
 
 
 /*

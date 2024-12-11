@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import PropTypes from "prop-types"; // Import prop-types
 import "./EmploiItem.css";
 import { useEmploiContext } from "../../hooks/useEmploiContext";
 import { useCandidatContext } from "../../hooks/useCandidatContext";
 import { useEntrepriseContext } from "../../hooks/useEntrepriseContext";
 
-const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
+const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs, emploi }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [selectedEmploi, setSelectedEmploi] = useState(null); // Track selected emploi for details
   const { emplois, dispatch } = useEmploiContext();
   const { candidat } = useCandidatContext();
-  const { entreprise } = useEntrepriseContext();//besoin pour update?
+  const { entreprise } = useEntrepriseContext(); // besoin pour update?
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchEmploi = async () => {
@@ -37,12 +40,34 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
     }
   }, [dispatch, candidat]);
 
+  const handleSubmitPostuler = async (e, emploi) => {
+    e.preventDefault();
 
-  
+    
+    console.log(emploi);
+    console.log("Attempting to apply for job:", emploi._id);
+
+    const response = await fetch(`/api/offreEmploi/postuler/${emploi._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${candidat.token}`
+      }
+    });
+
+    const json = await response.json();
+    if (response.ok) {
+      console.log('Application successful:', json);
+      setShowMessage(emploi); // Show the message for this specific emploi
+    } else {
+      console.error('Application failed:', json.message);
+      setError('Échec de la candidature: ' + json.message);
+    }
+  };
 
   const emploisList = emplois || [];
   const filteredEmplois = emploisList.filter((emploi) => {
-    const nomPoste = emploi.nom_poste || ""; // Assurez une valeur par défaut
+    const nomPoste = emploi.nom_poste || ""; // Default value to avoid undefined errors
     const nomCandidat = emploi.nom_candidat || "";
     const categorie = emploi.categorie || "";
     const description = emploi.description || "";
@@ -61,12 +86,15 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
     setSelectedEmploi((prevEmploi) => (prevEmploi === emploi ? null : emploi));
   };
 
+  // Debugging log to check the props
+  console.log("Emploi prop value:", emploi);
+
   return (
     <div>
       <ul className="lmj-emploi-list">
         {filteredEmplois.length > 0 ? (
           filteredEmplois.map((emploi) => (
-            <div className="emploi-container" key={emploi.nom_poste}>
+            <div className="emploi-container" key={emploi._id || emploi.nom_poste}>
               <div
                 className="like-icon"
                 onClick={() => {
@@ -107,9 +135,10 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
                 <span className="label">Emplacement:</span> {emploi.emplacement}
               </span>
 
-              <button className="buttonP" onClick={() => setShowMessage((prev) => prev === emploi ? null : emploi)}>
-                Postuler
-              </button>
+              <form onSubmit={(e) => handleSubmitPostuler(e, emploi)}>
+                 <button className="buttonP" type="submit">Postuler</button>
+              </form>
+
 
               {showMessage === emploi && (
                 <div className="popup">
@@ -117,7 +146,7 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
                     <span className="close" onClick={() => setShowMessage(null)}>
                       &times;
                     </span>
-                    <h4>Merci d'avoir soumis votre candiature!</h4>
+                    <h4>Merci d'avoir soumis votre candidature!</h4>
                   </div>
                 </div>
               )}
@@ -147,6 +176,19 @@ const EmploiItem = ({ searchTerm, location, likedJobs, setLikedJobs }) => {
       </ul>
     </div>
   );
+};
+
+// Prop validation for the emploi prop
+EmploiItem.propTypes = {
+  emploi: PropTypes.object, // Ensures that emploi is an object (or undefined)
+  searchTerm: PropTypes.string,
+  location: PropTypes.string,
+  likedJobs: PropTypes.object,
+  setLikedJobs: PropTypes.func,
+};
+
+EmploiItem.defaultProps = {
+  emploi: null, // Set default value for emploi
 };
 
 export default EmploiItem;

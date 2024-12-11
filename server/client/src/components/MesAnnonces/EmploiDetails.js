@@ -75,13 +75,11 @@ const EmploiDetail = ({ emploi }) => {
       setError('Échec de la mise à jour: ' + json.message);
     }
 
-
-    
   };
 
   return (
     <div className="emploi-detail-container">
-      <ul className="lmj-emploi-list">
+      <ul className="lmj-emploi-list tata">
         <div className={`emploi-container ${isEditing ? "editing" : ""}`}>
           <div className="image-containerB" onClick={toggleEdit}>
             <img src={edit} alt="edit" className="small-image" />

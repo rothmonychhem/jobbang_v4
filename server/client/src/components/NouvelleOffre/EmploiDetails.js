@@ -3,7 +3,7 @@
 
     return (
         <div>
-          <ul className="lmj-emploi-list">
+          <ul className="lmj-emploi-list tutu">
         
                 <div className="emploi-container-details" >
                   <h2 className="jobTitle">{emploi.nom_poste}</h2>
