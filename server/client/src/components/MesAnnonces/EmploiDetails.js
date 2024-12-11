@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useEmploiContext } from "../../hooks/useEmploiContext";
 import "./EmploiDetails.css";
 import edit from '../../images/edit.png';
-import { locations } from '../../data/locations';
 import { useEntrepriseContext } from "../../hooks/useEntrepriseContext";
 
 const EmploiDetail = ({ emploi }) => {
@@ -74,7 +73,6 @@ const EmploiDetail = ({ emploi }) => {
     } else {
       setError('Échec de la mise à jour: ' + json.message);
     }
-
   };
 
   return (
@@ -107,7 +105,7 @@ const EmploiDetail = ({ emploi }) => {
             <div className="popup email-popup">
               <div className="popup-content">
                 <span className="close" onClick={toggleEmail}>&times;</span>
-                <h4>Email: <a href={`mailto:${emploi.candidats}`}>{emploi.candidats}</a></h4>
+                <h4>Email: <a href={`mailto:${emploi.email_employeur}`}>{emploi.email_employeur}</a></h4>
               </div>
             </div>
           )}
@@ -139,11 +137,13 @@ const EmploiDetail = ({ emploi }) => {
               <div className="popup-content">
                 <span className="close" onClick={toggleApplicants}>&times;</span>
                 <h4>Candidats ayant postulé:</h4>
-                {/* Simuler des candidats, à remplacer par un appel API */}
                 <ul>
-                  <li>John Doe</li>
-                  <li>Jane Smith</li>
-                  <li>Robert Johnson</li>
+                  {/* Loop through the candidats array and display their email addresses */}
+                  {emploi.candidats && emploi.candidats.map((email, index) => (
+                    <li key={index}>
+                      <a href={`mailto:${email}`}>{email}</a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
