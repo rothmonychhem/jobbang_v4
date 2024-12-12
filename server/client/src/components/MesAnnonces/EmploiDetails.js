@@ -3,6 +3,7 @@ import { useEmploiContext } from "../../hooks/useEmploiContext";
 import "./EmploiDetails.css";
 import edit from '../../images/edit.png';
 import { useEntrepriseContext } from "../../hooks/useEntrepriseContext";
+import { locations } from '../../data/locations';
 
 const EmploiDetail = ({ emploi }) => {
   const { entreprise } = useEntrepriseContext();
@@ -158,7 +159,129 @@ const EmploiDetail = ({ emploi }) => {
                 <span className="close" onClick={toggleEdit}>&times;</span>
                 <h4>Modifier l'offre d'emploi</h4>
                 <form onSubmit={handleSubmitEdit} className="edit-job-form">
-                  {/* Form fields here */}
+                <div className="inputs-groups">
+                    <label>Nom de l'entreprise</label>
+                    <input
+                      type="text"
+                      name="nom_entreprise"
+                      value={editedEmploi.nom_entreprise}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Nom du poste</label>
+                    <input
+                      type="text"
+                      name="nom_poste"
+                      value={editedEmploi.nom_poste}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Salaire</label>
+                    <input
+                      type="text"
+                      name="salaire"
+                      value={editedEmploi.salaire}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^[0-9]*[.,]?[0-9]*$/.test(value) || value === "") {
+                          handleChange(e);
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Emplacement</label>
+                    <select
+                      name="emplacement"
+                      value={editedEmploi.emplacement}
+                      onChange={handleChange}
+                      required
+                    >
+                      {locations.map((loc, index) => (
+                        <option key={index} value={loc}>
+                          {loc}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Catégorie</label>
+                    <select
+                      name="categorie"
+                      value={editedEmploi.categorie}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="Technologie">Technologie</option>
+                      <option value="Santé">Santé</option>
+                      <option value="Environnement">Environnement</option>
+                      <option value="Design">Design</option>
+                      <option value="Management">Management</option>
+                      <option value="Média">Média</option>
+                      <option value="Finance">Finance</option>
+                      <option value="Biologie">Biologie</option>
+                      <option value="Énergie">Énergie</option>
+                      <option value="Autre">Autre</option>
+                    </select>
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Email de l'employeur</label>
+                    <input
+                      type="email"
+                      name="email_employeur"
+                      value={editedEmploi.email_employeur}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Description</label>
+                    <textarea
+                      name="description"
+                      value={editedEmploi.description}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Exigences</label>
+                    <textarea
+                      name="exigence"
+                      value={editedEmploi.exigence}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="inputs-groups">
+                    <label>Responsabilités</label>
+                    <textarea
+                      name="responsabilite"
+                      value={editedEmploi.responsabilite}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                    <div className="inputs-groups">
+                      <label>Visible</label>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={visibility}
+                          value={editedEmploi.visibility}
+                          onChange={(e) => {
+                            const isVisible = e.target.checked;
+                            setIsVisible(isVisible);
+                            setEditedEmploi((prev) => ({ ...prev, visibility: isVisible }));
+                          }}
+                        />
+                        <span className="slider"></span>
+                      </label>
+                    </div>
                   <button type="submit">Enregistrer les modifications</button>
                 </form>
               </div>
